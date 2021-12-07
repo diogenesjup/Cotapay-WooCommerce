@@ -4,4 +4,5 @@ Repositório oficial do Plugin Cotapay para WooCommerce!
 
 Para se cadastrar ou informações comerciais acesse > https://www.cotapay.com.br/
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/gwoW_-75mEk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/gwoW_-75mEk/0.jpg)](https://www.youtube.com/watch?v=gwoW_-75mEk)
