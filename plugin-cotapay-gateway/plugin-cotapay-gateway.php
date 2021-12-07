@@ -51,139 +51,6 @@ function misha_register_and_enqueue_cotapay() {
 
 
 
-/**
-*  ------------------------------------------------------------------------------------------------
-*
-*
-*   CRIAR OS CUSTOM FIELDS
-*
-*
-*  ------------------------------------------------------------------------------------------------
-*/
-
-// GARANTIR QUE O ACF SEJA INSTALADO
-add_action( 'admin_notices', 'my_theme_dependencies_cotapaygateway' );
-
-function my_theme_dependencies_cotapaygateway() {
-  if( ! function_exists('acf_add_local_field_group') )
-    echo '<div class="error"><p>' . __( 'Atenção: Plugin Cotapay Gateway precisa do plugin <b>Advanced Custom Fields</b> instalado para funcionar', 'my-theme' ) . '</p></div>';
-}
-
-
-if( function_exists('acf_add_local_field_group') ):
-
-		acf_add_local_field_group(array(
-			'key' => 'group_6182c762367ce',
-			'title' => 'Configurações Cotapay',
-			'fields' => array(
-				array(
-					'key' => 'field_6182c771c33f0',
-					'label' => 'Login de acesso integração',
-					'name' => 'login_de_acesso_integracao',
-					'type' => 'text',
-					'instructions' => '',
-					'required' => 0,
-					'conditional_logic' => 0,
-					'wrapper' => array(
-						'width' => '',
-						'class' => '',
-						'id' => '',
-					),
-					'default_value' => '',
-					'placeholder' => '',
-					'prepend' => '',
-					'append' => '',
-					'maxlength' => '',
-				),
-				array(
-					'key' => 'field_6182c77bc33f1',
-					'label' => 'Senha de acesso integração',
-					'name' => 'senha_de_acesso_integracao',
-					'type' => 'text',
-					'instructions' => '',
-					'required' => 0,
-					'conditional_logic' => 0,
-					'wrapper' => array(
-						'width' => '',
-						'class' => '',
-						'id' => '',
-					),
-					'default_value' => '',
-					'placeholder' => '',
-					'prepend' => '',
-					'append' => '',
-					'maxlength' => '',
-				),
-				array(
-					'key' => 'field_6182c784c33f2',
-					'label' => 'Ambiente de teste',
-					'name' => 'ambiente_de_teste',
-					'type' => 'select',
-					'instructions' => '',
-					'required' => 0,
-					'conditional_logic' => 0,
-					'wrapper' => array(
-						'width' => '',
-						'class' => '',
-						'id' => '',
-					),
-					'choices' => array(
-						'Sim' => 'Sim',
-						'Não' => 'Não',
-					),
-					'default_value' => false,
-					'allow_null' => 0,
-					'multiple' => 0,
-					'ui' => 0,
-					'return_format' => 'value',
-					'ajax' => 0,
-					'placeholder' => '',
-				),
-				array(
-					'key' => 'field_6182c796c33f3',
-					'label' => 'Porcentagem taxa administrativa Split',
-					'name' => 'porcentagem_taxa_administrativa_split',
-					'type' => 'number',
-					'instructions' => '',
-					'required' => 0,
-					'conditional_logic' => 0,
-					'wrapper' => array(
-						'width' => '',
-						'class' => '',
-						'id' => '',
-					),
-					'default_value' => '',
-					'placeholder' => '',
-					'prepend' => '',
-					'append' => '',
-					'min' => '',
-					'max' => '',
-					'step' => '',
-				),
-			),
-			'location' => array(
-				array(
-					array(
-						'param' => 'post',
-						'operator' => '==',
-						'value' => '34343',
-					),
-				),
-			),
-			'menu_order' => 0,
-			'position' => 'acf_after_title',
-			'style' => 'default',
-			'label_placement' => 'top',
-			'instruction_placement' => 'label',
-			'hide_on_screen' => '',
-			'active' => true,
-			'description' => '',
-		));
-
-
-endif;
-
-
 
 
 
@@ -196,6 +63,7 @@ endif;
 *
 *  ------------------------------------------------------------------------------------------------
 */
+/*
 add_action( 'admin_menu', 'wpse_cotapay_manual_register' );
 
 function wpse_cotapay_manual_register()
@@ -232,6 +100,7 @@ function cotapay_render_configs(){
         require $file;
 
 }
+*/
 
 /**
 *  ------------------------------------------------------------------------------------------------
@@ -793,35 +662,70 @@ function cotapay_init_gateway_class() {
 			// FIM PROCESSAR PARCELAS
 
 
+			$html_cc = "";
+			$html_boleto = "";
+			$html_link  = "";
+
+
+			if($this->ativar_cartaodecredito=="yes"):
+				$html_cc = '
+
+					<li class=" payment_method_woo-mercado-pago-custom">
+										<input id="cotapay_payment_cartaodecredito" type="radio" class="input-radio" name="cotapay_meio_de_pagamento" value="woo-cotapay-cartaodecredito" checked="checked" data-order_button_text="Pagar com cartão de crédito" >
+
+										 <label for="cotapay_payment_cartaodecredito">
+											Pagar com <b>Cartão de Crédito</b></label>
+
+									</li>
+
+				';
+			endif;
+
+
+			if($this->ativar_boletobancario=="yes"):
+
+				$html_boleto = '
+			      
+			      <li class=" payment_method_woo-mercado-pago-custom">
+										<input id="cotapay_payment_boletobancario" type="radio" class="input-radio" name="cotapay_meio_de_pagamento" value="woo-cotapay-boletobancario" data-order_button_text="Pagar com Boleto Bancário">
+
+										 <label for="cotapay_payment_boletobancario">
+											Pagar com <b>Boleto Bancário</b></label>
+
+									</li>
+
+
+				';
+
+			endif;
+
+
+			if($this->ativar_linkdepagamento=="yes"):
+
+				$html_link = '
+
+					<li class=" payment_method_woo-mercado-pago-custom">
+										<input id="cotapay_payment_linkdepagamento" type="radio" class="input-radio" name="cotapay_meio_de_pagamento" value="woo-cotapay-linkdepagamento" data-order_button_text="Pagar com Link de Pagamento">
+
+										<label for="cotapay_payment_linkdepagamento">
+											Pagar com <b>Link de Pagamento</b></label>
+
+									</li>
+
+				';
+
+			endif;
+
+
 
 			$html = '<ul class="wc_cotapay_payment_methods cotapay_payment_methods cotapay_methods">
 
-						<li class=" payment_method_woo-mercado-pago-custom">
-							<input id="cotapay_payment_cartaodecredito" type="radio" class="input-radio" name="cotapay_meio_de_pagamento" value="woo-cotapay-cartaodecredito" checked="checked" data-order_button_text="Pagar com cartão de crédito" >
+						
+					'.$html_cc.'
+					'.$html_boleto.'
+					'.$html_link.'
 
-							 <label for="cotapay_payment_cartaodecredito">
-								Pagar com <b>Cartão de Crédito</b></label>
-
-						</li>
-
-
-						<li class=" payment_method_woo-mercado-pago-custom">
-							<input id="cotapay_payment_boletobancario" type="radio" class="input-radio" name="cotapay_meio_de_pagamento" value="woo-cotapay-boletobancario" data-order_button_text="Pagar com Boleto Bancário">
-
-							 <label for="cotapay_payment_boletobancario">
-								Pagar com <b>Boleto Bancário</b></label>
-
-						</li>
-
-
-						<li class=" payment_method_woo-mercado-pago-custom">
-							<input id="cotapay_payment_linkdepagamento" type="radio" class="input-radio" name="cotapay_meio_de_pagamento" value="woo-cotapay-linkdepagamento" data-order_button_text="Pagar com Link de Pagamento">
-
-							<label for="cotapay_payment_linkdepagamento">
-								Pagar com <b>Link de Pagamento</b></label>
-
-						</li>
-
+					
 				  </ul>
 
 					<!-- CARTÃO DE CRÉDITO -->
