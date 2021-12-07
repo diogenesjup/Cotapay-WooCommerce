@@ -2,7 +2,7 @@
 /*
 Plugin Name: Plugin Cotapay Gateway
 Plugin URI: https://www.cotapay.com.br/
-Description: Aceite pagamentos por cartões de débito e/ou de crédito utilizando as mais diversas bandeiras
+Description: Aceite pagamentos por cartões de crédito, Boleto ou links de pagamento
 Author: CotaBank & Diogenes Junior
 Version: 1.0.0
 Author URI: https://www.cotapay.com.br/
@@ -140,7 +140,7 @@ function cotapay_rsa_public_key($url_conexao){
 		
 		else:
 		
-			return false;
+			return "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkP+O2bQZIj6ddp/pZI4s\nOrPZ/NHyV7ANLZW3ZsVstEE8HtHoHaFkBZBJ7E/7tF60mgn67jHNP1zmefxShQfJ\nbAI1eBIjS2iouN2xlvZTT/LL1w4rSVf4m9/3iRjjS2U3GpFVTFgxvIxsAlq3sZCP\nxd89ua1Z637tgGqac1VbAuPDA2UhAk/uYWbgE+aQT1kMqS00dtSZHEfIUNoFJ+Kk\nxBm2eYBc5nqmvbdvNENWlN8Ai9LbAgRUPX3vmxDmUt0JSttOfwzGFIRKgGBW78MM\naQDiO050fVxhHre8RWWt8URrLbRrhuNquOv3jTk56jnI//+K3Y68n/22XMAmyzP/\n5wIDAQAB\n-----END PUBLIC KEY-----\n";
 		
 		endif;
 		
